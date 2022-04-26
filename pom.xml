@@ -30,6 +30,8 @@
         <spring.cloud.gateway.version>3.1.1</spring.cloud.gateway.version>
         <spring.cloud.loadbalancer.version>3.1.1</spring.cloud.loadbalancer.version>
         <spring.boot.web.version>2.4.11</spring.boot.web.version>
+        <spring.boot.logging.version>2.4.11</spring.boot.logging.version>
+        <lombok.version>1.18.0</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -59,6 +61,12 @@
                 <artifactId>spring-cloud-starter-loadbalancer</artifactId>
                 <version>${spring.cloud.loadbalancer.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -83,6 +91,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+            <version>${spring.boot.logging.version}</version>
         </dependency>
     </dependencies>
 

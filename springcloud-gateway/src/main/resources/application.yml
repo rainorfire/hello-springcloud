@@ -18,7 +18,8 @@ spring:
         predicates[0]:
           name: Path
           args[pattern]: /echo/**
-        filters[0]: StripPrefix=1
+        filters:
+        - StripPrefix=1
 
 # 要公开的端点列表
 management:
@@ -26,3 +27,8 @@ management:
     web:
       exposure:
         include: "*"
+
+logging:
+#  config: /springcloud-gateway/logback.xml
+  level:
+    com.benny: info
