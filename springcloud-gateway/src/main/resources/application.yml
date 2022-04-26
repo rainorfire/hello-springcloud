@@ -1,0 +1,28 @@
+server:
+  port: 8849
+
+spring:
+  application:
+    name: springcloud-gateway
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 106.12.174.147:8848
+
+    gateway:
+      routes:
+      - id: springcloud-provider
+        uri: http://localhost:8850/
+        predicates[0]:
+          name: Path
+          args[pattern]: /echo/**
+        filters[0]: StripPrefix=1
+
+# 要公开的端点列表
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

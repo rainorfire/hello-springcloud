@@ -1,0 +1,24 @@
+server:
+  port: 8850
+
+spring:
+  application:
+    name: springcloud-provider
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 106.12.174.147:8848
+        enabled: true
+#        instance-enabled: true
+
+# 要公开的端点列表
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
