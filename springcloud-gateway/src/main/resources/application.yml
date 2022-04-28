@@ -10,6 +10,7 @@ spring:
       password: nacos
       discovery:
         server-addr: 106.12.174.147:8848
+        enabled: true
 
     gateway:
       routes:
@@ -17,7 +18,7 @@ spring:
         uri: http://localhost:8850/
         predicates[0]:
           name: Path
-          args[pattern]: /echo/**
+          args[pattern]: /echo-api/**
         filters:
         - StripPrefix=1
 

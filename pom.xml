@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.11</version>
+        <version>2.6.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -21,16 +21,22 @@
         <module>springcloud-nacos</module>
         <module>springcloud-gateway</module>
         <module>springcloud-provider</module>
+        <module>springcloud-consumer</module>
+        <module>springcloud-api</module>
     </modules>
 
     <properties>
         <alibaba.nacos.config.version>2021.1</alibaba.nacos.config.version>
         <alibaba.nacos.discovery.version>2021.1</alibaba.nacos.discovery.version>
-        <spring.cloud.bootstrap.version>3.1.1</spring.cloud.bootstrap.version>
-        <spring.cloud.gateway.version>3.1.1</spring.cloud.gateway.version>
-        <spring.cloud.loadbalancer.version>3.1.1</spring.cloud.loadbalancer.version>
-        <spring.boot.web.version>2.4.11</spring.boot.web.version>
-        <spring.boot.logging.version>2.4.11</spring.boot.logging.version>
+        <alibaba.sentinel.version>2021.1</alibaba.sentinel.version>
+
+        <spring.cloud.bootstrap.version>3.1.2</spring.cloud.bootstrap.version>
+        <spring.cloud.gateway.version>3.1.2</spring.cloud.gateway.version>
+        <spring.cloud.loadbalancer.version>3.1.2</spring.cloud.loadbalancer.version>
+        <spring.cloud.feign.version>3.1.2</spring.cloud.feign.version>
+
+        <spring.boot.web.version>2.6.7</spring.boot.web.version>
+        <spring.boot.logging.version>2.6.7</spring.boot.logging.version>
         <lombok.version>1.18.0</lombok.version>
     </properties>
 
@@ -67,6 +73,18 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring.cloud.feign.version}</version>
+            </dependency>
+
+            <!--<dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+                <version>${alibaba.sentinel.version}</version>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
