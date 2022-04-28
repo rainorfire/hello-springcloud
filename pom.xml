@@ -80,11 +80,11 @@
                 <version>${spring.cloud.feign.version}</version>
             </dependency>
 
-            <!--<dependency>
+            <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
                 <version>${alibaba.sentinel.version}</version>
-            </dependency>-->
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
