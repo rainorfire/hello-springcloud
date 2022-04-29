@@ -28,7 +28,7 @@
     <properties>
         <alibaba.nacos.config.version>2021.1</alibaba.nacos.config.version>
         <alibaba.nacos.discovery.version>2021.1</alibaba.nacos.discovery.version>
-        <alibaba.sentinel.version>2021.1</alibaba.sentinel.version>
+        <alibaba.sentinel.version>2021.0.1.0</alibaba.sentinel.version>
 
         <spring.cloud.bootstrap.version>3.1.2</spring.cloud.bootstrap.version>
         <spring.cloud.gateway.version>3.1.2</spring.cloud.gateway.version>

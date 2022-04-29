@@ -13,6 +13,12 @@ spring:
         enabled: true
 #        instance-enabled: true
 
+# sentinel 相关配置
+    sentinel:
+      eager: true # 取消Sentinel控制台懒加载
+      transport:
+        dashboard: localhost:8080
+
 # 要公开的端点列表
 management:
   endpoint:
@@ -22,3 +28,10 @@ management:
     web:
       exposure:
         include: "*"
+
+# feign相关配置
+feign:
+  circuitbreaker:
+    enabled: true  # 开启熔断，开启之后 feign的fallback机制才会生效
+  sentinel:
+    enabled: true # 开启feign对sentinel的支持
