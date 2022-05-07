@@ -1,0 +1,64 @@
+server:
+  port: 8852
+
+spring:
+  application:
+    name: springcloud-authorization
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 106.12.174.147:8848
+        enabled: true
+#        instance-enabled: true
+
+  # 数据库设置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.12.174.147:3306/lianche_test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: Lianche@123456@_
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    #连接池Druid的设置
+    druid:
+      initial-size: 5 #初始化时建立物理连接的个数
+      min-idle: 5 #最小连接池数量
+      max-active: 20 #最大连接池数量 maxIdle已经不再使用
+      max-wait: 60000 #获取连接时最大等待时间，单位毫秒
+      test-while-idle: true #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      time-between-eviction-runs-millis: 60000 #既作为检测的间隔时间又作为testWhileIdel执行的依据
+      min-evictable-idle-time-millis: 30000 #销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接
+      validation-query: select 'x' #用来检测连接是否有效的sql 必须是一个查询语句，mysql中为 select 'x'，oracle中为 select 1 from dual
+      test-on-borrow: false #申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false #归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      exception-sorter: true #当数据库抛出不可恢复的异常时,抛弃该连接
+      pool-prepared-statements: true #是否缓存preparedStatement,mysql5.5+建议开启
+      max-pool-prepared-statement-per-connection-size: 20  #当值大于0时poolPreparedStatements会自动修改为true
+      filters: stat,wall #配置扩展插件
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500 #通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      use-global-data-source-stat: true #合并多个DruidDataSource的监控数据
+      stat-view-servlet: #设置访问druid监控页的账号和密码,默认没有
+        login-username: admin
+        login-password: admin
+
+
+# 要公开的端点列表
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#mybatis 配置
+  mybatis:
+    mapperLocations: classpath*:/com/benny/springcloud/authorization/mapper/**.xml
+    type-aliases-package: com.benny.springcloud.model
+    type-handlers-package: com.benny.springcloud
+  # configuration:
+#      cache-enabled: true
+

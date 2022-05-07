@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- mvn mybatis-generator:generate  -->
+    <!-- yl's dir C:\Users\yl\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar-->
+    <!-- zw's dir D:/webtools/maven3_local/maven-dependcies/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar-->
+    <classPathEntry
+            location="D:/mysql-connector-java-5.1.13.jar"/>
+
+    <!--targetRuntime:
+        MyBatis3
+        MyBatis3Simple   不会自动生成Example
+     -->
+    <context id="mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!--beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号；-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 序列化插件 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <!--覆盖生成XML文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+
+        <!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!--
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/lianche"
+                        userId="root"
+                        password="rootroot"
+        />
+        -->
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://106.12.174.147:3306/authorization-center?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false&amp;tinyInt1isBit=false"
+                        userId="root"
+                        password="Lianche@123456@_"
+        />
+
+        <!--实体生成路径 -->
+        <javaModelGenerator targetPackage="com.benny.springcloud.model"
+                            targetProject="src/main/java">
+        </javaModelGenerator>
+        <!--mapper文件生成路径 -->
+        <sqlMapGenerator targetPackage="com/benny/springcloud/authorization/mapper" targetProject="src/main/resources" />
+
+        <!--dao层生成路径 -->
+        <javaClientGenerator targetPackage="com.benny.springcloud.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER"/>
+
+        <!--
+        <table  tableName="tbl_business_agent" domainObjectName="BusinessAgent">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table  tableName="tbl_agent_account_info" domainObjectName="AgentAccountInfo">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table  tableName="tbl_agent_opening_policy_place_map" domainObjectName="AgentOpeningPolicyPlaceMap">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table  tableName="tbl_agent_user_map" domainObjectName="AgentUserMap">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table  tableName="tbl_business_log" domainObjectName="BusinessLog">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table  tableName="tbl_merchant_agent_map" domainObjectName="MerchantAgentMap">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        -->
+        <table  tableName="t_test_user" domainObjectName="TestUser">
+           <!-- <generatedKey column="ID" sqlStatement="MySql" identity="true"/>-->
+        </table>
+    </context>
+
+</generatorConfiguration>
