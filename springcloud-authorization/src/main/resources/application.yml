@@ -16,7 +16,7 @@ spring:
   # 数据库设置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.12.174.147:3306/lianche_test?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://106.12.174.147:3306/authorization-center?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
     username: root
     password: Lianche@123456@_
     type: com.alibaba.druid.pool.DruidDataSource
@@ -33,7 +33,7 @@ spring:
       validation-query: select 'x' #用来检测连接是否有效的sql 必须是一个查询语句，mysql中为 select 'x'，oracle中为 select 1 from dual
       test-on-borrow: false #申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
       test-on-return: false #归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
-      exception-sorter: true #当数据库抛出不可恢复的异常时,抛弃该连接
+#      exception-sorter: true #当数据库抛出不可恢复的异常时,抛弃该连接
       pool-prepared-statements: true #是否缓存preparedStatement,mysql5.5+建议开启
       max-pool-prepared-statement-per-connection-size: 20  #当值大于0时poolPreparedStatements会自动修改为true
       filters: stat,wall #配置扩展插件
@@ -55,10 +55,10 @@ management:
         include: "*"
 
 #mybatis 配置
-  mybatis:
-    mapperLocations: classpath*:/com/benny/springcloud/authorization/mapper/**.xml
-    type-aliases-package: com.benny.springcloud.model
-    type-handlers-package: com.benny.springcloud
-  # configuration:
+mybatis:
+  mapperLocations: classpath*:/com/benny/springcloud/authorization/mapper/**.xml
+  type-aliases-package: com.benny.springcloud.model
+  type-handlers-package: com.benny.springcloud
+# configuration:
 #      cache-enabled: true
 

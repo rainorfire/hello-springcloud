@@ -44,6 +44,8 @@
         <alibaba.druid.version>1.2.9</alibaba.druid.version>
         <lombok.version>1.18.0</lombok.version>
         <mysql.connector.version>8.0.29</mysql.connector.version>
+        <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
+        <apache.commons-collections.version>4.4</apache.commons-collections.version>
     </properties>
 
     <dependencyManagement>
@@ -128,6 +130,26 @@
                 <version>${lombok.version}</version>
             </dependency>
             <!-- lombok -->
+
+            <!-- apache 相关 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${apache.commons-collections.version}</version>
+            </dependency>
+            <!-- apache 相关 -->
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${spring.cloud.bootstrap.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -141,12 +163,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-            <version>${spring.cloud.bootstrap.version}</version>
         </dependency>
 
         <dependency>

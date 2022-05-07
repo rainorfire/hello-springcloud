@@ -40,14 +40,6 @@
             <property name="suppressDate" value="true"/>
         </commentGenerator>
 
-        <!--
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/lianche"
-                        userId="root"
-                        password="rootroot"
-        />
-        -->
-
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://106.12.174.147:3306/authorization-center?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false&amp;tinyInt1isBit=false"
                         userId="root"
@@ -65,30 +57,20 @@
         <javaClientGenerator targetPackage="com.benny.springcloud.mapper"
                              targetProject="src/main/java" type="XMLMAPPER"/>
 
-        <!--
-        <table  tableName="tbl_business_agent" domainObjectName="BusinessAgent">
+        <table  tableName="clientdetails"  domainObjectName="ClientDetails" />
+        <table  tableName="oauth_access_token"  domainObjectName="OauthAccessToken" />
+        <table  tableName="oauth_approvals"  domainObjectName="OauthApprovals" />
+        <table  tableName="oauth_client_details"  domainObjectName="OauthClientDetails" />
+        <table  tableName="oauth_client_token"  domainObjectName="OauthClientToken" />
+        <table  tableName="oauth_code"  domainObjectName="OauthCode" />
+        <table  tableName="oauth_refresh_token"  domainObjectName="OauthRefreshToken" />
+        <table  tableName="role"  domainObjectName="Role">
             <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
         </table>
-        <table  tableName="tbl_agent_account_info" domainObjectName="AgentAccountInfo">
+        <table  tableName="user"  domainObjectName="User">
             <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
         </table>
-        <table  tableName="tbl_agent_opening_policy_place_map" domainObjectName="AgentOpeningPolicyPlaceMap">
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table  tableName="tbl_agent_user_map" domainObjectName="AgentUserMap">
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
-        </table>
-
-        <table  tableName="tbl_business_log" domainObjectName="BusinessLog">
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table  tableName="tbl_merchant_agent_map" domainObjectName="MerchantAgentMap">
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
-        </table>
-        -->
-        <table  tableName="t_test_user" domainObjectName="TestUser">
-           <!-- <generatedKey column="ID" sqlStatement="MySql" identity="true"/>-->
-        </table>
+        <table  tableName="user_role"  domainObjectName="UserRole" />
     </context>
 
 </generatorConfiguration>
