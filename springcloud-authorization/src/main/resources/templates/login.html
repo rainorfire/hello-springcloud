@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<!-- 省略样式 -->
+<body style="margin: 0px">
+<div class="title">
+    <div class="title-right">登录</div>
+</div>
+<div class="container">
+    <h3 th:text="'应用登录'"></h3>
+    <form method="post" action="/login-process">
+        <input type="text" name="username" value="" />
+        <input type="password" name="password" value="" />
+        <button class="btn" type="submit">登录</button>
+    </form>
+</div>
+</body>
+</html>

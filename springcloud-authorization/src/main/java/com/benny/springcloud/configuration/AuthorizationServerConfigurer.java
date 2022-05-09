@@ -14,7 +14,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -49,8 +48,10 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     private UserDetailsService userDetailsService;
     @Resource
     private AuthenticationManager authenticationManager;
-    //    @Resource
-    //    private DataSource dataSource;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
     @Resource
     private OauthClientDetailsMapper oauthClientDetailsMapper;
 
@@ -69,7 +70,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 //        super.configure(security);
         // allowFormAuthenticationForClients: 主要是让/oauth/token支持client_id以及client_secret作登录认证
-        security.allowFormAuthenticationForClients().passwordEncoder(passwordEncoder()).tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
+        security.allowFormAuthenticationForClients().passwordEncoder(passwordEncoder).tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
     }
 
     /**
@@ -159,8 +160,8 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
         return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 }

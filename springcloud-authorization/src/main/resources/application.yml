@@ -14,11 +14,15 @@ spring:
 #        instance-enabled: true
 
   thymeleaf:
-    prefix: classpath:/views/
+#    view-names: classpath:/views/
+    prefix: classpath:/templates/
     suffix: .html
+    mode: HTML
     cache: false
-    mvc:
-      throw-exception-if-no-handler-found: true
+    encoding: UTF-8
+    enabled: true
+    servlet:
+      content-type: text/html
 
 
   # 数据库设置
