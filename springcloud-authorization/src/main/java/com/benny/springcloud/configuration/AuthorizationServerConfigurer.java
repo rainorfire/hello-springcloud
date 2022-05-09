@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,7 @@ import java.util.Map;
  * @date 2022/5/7 18:14
  * @since 1.0
  */
+@Order(7)
 @Slf4j
 @Configuration
 @EnableAuthorizationServer
@@ -99,7 +101,9 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
             .userDetailsService(userDetailsService)
             .accessTokenConverter(accessTokenConverter())
             .tokenEnhancer(jwtTokenEnhancer)
-            .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);;
+            .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+
+        endpoints.pathMapping("oauth/confirm_access", "/oauth/custom-confirm-access");
     }
 
     private ClientDetailsService getClientDetailsService() {
@@ -133,7 +137,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 }
             }
             String scopes = oauthClientDetails.getScope();
-            if (scopes != null) {
+            if (scopes != null && "true".equals(oauthClientDetails.getAutoapprove())) {
                 details.setAutoApproveScopes(StringUtils.commaDelimitedListToSet(scopes));
             }
             return details;

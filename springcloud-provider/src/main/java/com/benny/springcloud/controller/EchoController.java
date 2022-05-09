@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -27,8 +28,12 @@ class EchoController {
     private NacosDiscoveryProperties nacosDiscoveryProperties;
 
     @GetMapping("/")
-    public ResponseEntity index() {
-        return new ResponseEntity("index error", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity index(HttpServletRequest request) {
+        final String code = request.getParameter("code");
+        final String state = request.getParameter("state");
+        final String result = "code = " + code + ", state = " + state;
+        System.out.println(result);
+        return new ResponseEntity("index result = " + result, HttpStatus.OK);
     }
 
     @GetMapping("/test")
