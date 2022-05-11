@@ -1,6 +1,6 @@
-package com.benny.springcloud.configuration;
+package com.benny.springcloud.security.configuration;
 
-import com.benny.springcloud.configuration.bean.ClientDetailsBean;
+import com.benny.springcloud.security.configuration.bean.ClientDetailsBean;
 import com.benny.springcloud.mapper.OauthClientDetailsMapper;
 import com.benny.springcloud.model.OauthClientDetails;
 import com.benny.springcloud.model.OauthClientDetailsExample;

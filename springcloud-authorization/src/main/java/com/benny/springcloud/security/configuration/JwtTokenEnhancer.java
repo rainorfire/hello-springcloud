@@ -1,6 +1,6 @@
-package com.benny.springcloud.configuration;
+package com.benny.springcloud.security.configuration;
 
-import com.benny.springcloud.configuration.bean.UserDetailsBean;
+import com.benny.springcloud.security.configuration.bean.UserDetailsBean;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

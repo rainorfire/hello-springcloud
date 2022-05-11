@@ -1,6 +1,6 @@
-package com.benny.springcloud.configuration;
+package com.benny.springcloud.security.configuration;
 
-import com.benny.springcloud.configuration.bean.UserDetailsBean;
+import com.benny.springcloud.security.configuration.bean.UserDetailsBean;
 import com.benny.springcloud.mapper.RoleMapper;
 import com.benny.springcloud.mapper.UserMapper;
 import com.benny.springcloud.mapper.UserRoleMapper;

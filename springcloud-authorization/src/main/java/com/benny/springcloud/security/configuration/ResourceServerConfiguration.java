@@ -1,8 +1,10 @@
-package com.benny.springcloud.configuration;
+package com.benny.springcloud.security.configuration;
 
+import com.benny.springcloud.security.entrypoint.ExceptionEntryPoint;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 /**
@@ -14,7 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  */
 @Order(8)
 @Configuration
-//@EnableResourceServer
+@EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -25,5 +27,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .permitAll()
             .anyRequest()
             .authenticated();
+        http.exceptionHandling().authenticationEntryPoint(new ExceptionEntryPoint());
+
     }
 }
