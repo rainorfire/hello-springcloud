@@ -4,6 +4,7 @@ import com.benny.springcloud.security.configuration.bean.ClientDetailsBean;
 import com.benny.springcloud.mapper.OauthClientDetailsMapper;
 import com.benny.springcloud.model.OauthClientDetails;
 import com.benny.springcloud.model.OauthClientDetailsExample;
+import com.benny.springcloud.security.entrypoint.CustomAuthenticationEntryPoint;
 import com.benny.springcloud.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jwt.crypto.sign.RsaSigner;
+import org.springframework.security.jwt.crypto.sign.RsaVerifier;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -22,12 +25,21 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.util.StringUtils;
+import sun.security.rsa.RSAPublicKeyImpl;
 
 import javax.annotation.Resource;
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +83,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 //        super.configure(security);
         // allowFormAuthenticationForClients: 主要是让/oauth/token支持client_id以及client_secret作登录认证
         security.allowFormAuthenticationForClients().passwordEncoder(passwordEncoder).tokenKeyAccess("permitAll()").checkTokenAccess("permitAll()");
+        security.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
     }
 
     /**
@@ -96,18 +109,21 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        super.configure(endpoints);
         endpoints.authenticationManager(authenticationManager)
             //配置加载用户信息的服务
             .userDetailsService(userDetailsService)
-            .accessTokenConverter(accessTokenConverter())
-            .tokenEnhancer(jwtTokenEnhancer)
             .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+
+        // 自定义token生成方式
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer,accessTokenConverter()));
+        endpoints.tokenEnhancer(tokenEnhancerChain);
 
         endpoints.pathMapping("oauth/confirm_access", "/oauth/custom-confirm-access");
     }
 
-    private ClientDetailsService getClientDetailsService() {
+    @Bean
+    public ClientDetailsService getClientDetailsService() {
         return clientId -> {
             OauthClientDetailsExample example = new OauthClientDetailsExample();
             example.createCriteria().andClientIdEqualTo(clientId);
@@ -148,7 +164,17 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setKeyPair(keyPair());
+        final KeyPair keyPair = keyPair();
+        jwtAccessTokenConverter.setKeyPair(keyPair);
+        try {
+            jwtAccessTokenConverter.setVerifier(new RsaVerifier(new RSAPublicKeyImpl(keyPair.getPublic().getEncoded())));
+        } catch (InvalidKeyException e) {
+            log.error("", e);
+        }
+//        jwtAccessTokenConverter.setSigner(new RsaSigner(keyPair.getPrivate().toString()));
+//        jwtAccessTokenConverter.setJwtClaimsSetVerifier();
+        jwtAccessTokenConverter.setSigningKey(new String(keyPair.getPrivate().getEncoded()));
+
         return jwtAccessTokenConverter;
     }
 

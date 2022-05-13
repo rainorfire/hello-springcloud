@@ -1,6 +1,7 @@
 package com.benny.springcloud.security.configuration;
 
 import com.benny.springcloud.security.entrypoint.ExceptionEntryPoint;
+import com.benny.springcloud.security.filter.LoginAuthFilter;
 import com.benny.springcloud.security.filter.CustomUsernamePasswordAuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -79,6 +80,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().authenticationEntryPoint(new ExceptionEntryPoint());
 
+        http.addFilterBefore(new LoginAuthFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new CustomUsernamePasswordAuthenticationFilter(authenticationManagerBean()),
             UsernamePasswordAuthenticationFilter.class);
 

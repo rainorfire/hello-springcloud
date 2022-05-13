@@ -1,5 +1,6 @@
 package com.benny.springcloud.controllers;
 
+import com.benny.springcloud.security.configuration.bean.UserDetailsBean;
 import com.benny.springcloud.vo.LoginParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,6 +59,11 @@ public class LoginController {
         if(StringUtils.isNotBlank(callback)) {
             return "redirect:" + callback;
         }
+
+        final Cookie uuidCookie = new Cookie("uuid", ((UserDetailsBean) authenticate.getPrincipal()).getUsername().toString());
+        uuidCookie.setPath("/");
+        uuidCookie.setDomain("localhost");
+        response.addCookie(uuidCookie);
         return "redirect:/login/login-successful";
     }
 
