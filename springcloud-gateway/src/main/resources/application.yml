@@ -22,6 +22,14 @@ spring:
         filters:
         - StripPrefix=1
 
+      - id: springcloud-authorization
+        uri: http://localhost:8852/
+        predicates[0]:
+          name: Path
+          args[pattern]: /auth-api/**
+        filters:
+          - StripPrefix=1
+
 # 要公开的端点列表
 management:
   endpoints:
