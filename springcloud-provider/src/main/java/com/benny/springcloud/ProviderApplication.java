@@ -32,7 +32,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class ProviderApplication {
 
 	/**
-	 * 校验：http://106.12.174.147:8848/nacos/v1/ns/catalog/instances?serviceName=springcloud-provider&clusterName=DEFAULT&pageSize=10&pageNo=1&namespaceId=
+	 * 校验：http://39.98.67.216:8848/nacos/v1/ns/catalog/instances?serviceName=springcloud-provider&clusterName=DEFAULT&pageSize=10&pageNo=1&namespaceId=
 	 *
 	 * @author ChenYuJia
 	 * @date 2022/4/26 14:08

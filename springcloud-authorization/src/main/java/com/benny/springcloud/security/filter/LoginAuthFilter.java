@@ -61,10 +61,10 @@ public class LoginAuthFilter extends OncePerRequestFilter {
             }
         }
 
-        if (StringUtils.isNotBlank(uuid) && (SecurityContextHolder.getContext().getAuthentication() == null
-            || !SecurityContextHolder.getContext().getAuthentication().isAuthenticated())
+        if (StringUtils.isNotBlank(uuid)/* && (SecurityContextHolder.getContext().getAuthentication() == null
+            || !SecurityContextHolder.getContext().getAuthentication().isAuthenticated())*/
             /*&& !SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")*/) {
-            final ApplicationContext applicationContext = AuthorizationApplication.getApplicationContext();
+             final ApplicationContext applicationContext = AuthorizationApplication.getApplicationContext();
             final UserDetailsService userDetailsService = applicationContext.getBean(UserDetailsService.class);
 
             final UserDetails userDetails = userDetailsService.loadUserByUsername(uuid);
