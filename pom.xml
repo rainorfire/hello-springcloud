@@ -27,8 +27,11 @@
     </modules>
 
     <properties>
-        <alibaba.nacos.config.version>2021.1</alibaba.nacos.config.version>
-        <alibaba.nacos.discovery.version>2021.1</alibaba.nacos.discovery.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <alibaba.nacos.config.version>2021.0.1.0</alibaba.nacos.config.version>
+        <alibaba.nacos.discovery.version>2021.0.1.0</alibaba.nacos.discovery.version>
         <alibaba.sentinel.version>2021.0.1.0</alibaba.sentinel.version>
 
         <spring.cloud.bootstrap.version>3.1.2</spring.cloud.bootstrap.version>
@@ -188,9 +191,18 @@
 
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
