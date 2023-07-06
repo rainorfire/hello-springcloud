@@ -1,6 +1,10 @@
 package com.benny.springcloud.security.filter;
 
 import com.benny.springcloud.AuthorizationApplication;
+import com.benny.springcloud.security.configuration.bean.UserDetailsBean;
+import com.benny.springcloud.security.jwt.JwtUtil;
+import com.benny.springcloud.util.CookieUtil;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -35,39 +39,48 @@ import java.util.stream.Collectors;
  * @date 2022/5/11 18:03
  * @since 1.0
  */
+@Data
 @Component
 public class LoginAuthFilter extends OncePerRequestFilter {
 
     private static final String LOGIN_PAGE_URL = "http://localhost:8852/login";
 
-    @Resource
-    private TokenEndpoint tokenEndpoint;
-
-    @Resource
-    private AuthorizationEndpoint authorizationEndpoint;
+//    @Resource
+//    private TokenEndpoint tokenEndpoint;
+//
+//    @Resource
+//    private AuthorizationEndpoint authorizationEndpoint;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
 
-        String uuid = "";
-        final Cookie[] cookies = request.getCookies();
-        if(cookies != null && cookies.length > 0) {
-            for(Cookie c : cookies) {
-                if("uuid".equals(c.getName())) {
-                    uuid = c.getValue();
-                    break;
-                }
+//        String uuid = "";
+//        final Cookie[] cookies = request.getCookies();
+//        if(cookies != null && cookies.length > 0) {
+//            for(Cookie c : cookies) {
+//                if("uuid".equals(c.getName())) {
+//                    uuid = c.getValue();
+//                    break;
+//                }
+//            }
+//        }
+//
+        String authorization = request.getHeader("al-token");
+        if(StringUtils.isBlank(authorization)) {
+            final Cookie authorizationCookie = CookieUtil.getCookieByName(request, "al-token");
+            if(authorizationCookie != null && StringUtils.isNotBlank(authorizationCookie.getValue()) ) {
+                authorization = authorizationCookie.getValue();
             }
         }
 
-        if (StringUtils.isNotBlank(uuid)/* && (SecurityContextHolder.getContext().getAuthentication() == null
-            || !SecurityContextHolder.getContext().getAuthentication().isAuthenticated())*/
-            /*&& !SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")*/) {
-             final ApplicationContext applicationContext = AuthorizationApplication.getApplicationContext();
+
+        if (StringUtils.isNotBlank(authorization)) {
+            final UserDetailsBean userDetailsBean = JwtUtil.verifyToken(authorization);
+            final ApplicationContext applicationContext = AuthorizationApplication.getApplicationContext();
             final UserDetailsService userDetailsService = applicationContext.getBean(UserDetailsService.class);
 
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(uuid);
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(userDetailsBean.getUsername());
             if(userDetails != null) {
                 final Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
                 final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
@@ -83,7 +96,7 @@ public class LoginAuthFilter extends OncePerRequestFilter {
 //            response.sendRedirect(LOGIN_PAGE_URL);
 //            return;
         }
-
+//
         filterChain.doFilter(request, response);
     }
 }

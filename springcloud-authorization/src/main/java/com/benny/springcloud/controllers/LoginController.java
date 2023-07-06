@@ -29,18 +29,18 @@ import javax.servlet.http.HttpServletResponse;
  * @since 1.0
  */
 @Controller
-@RequestMapping("/login")
+@RequestMapping("")
 public class LoginController {
 
     @Resource
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("")
+    @GetMapping("/login")
     public String loginPage(HttpServletRequest request) throws Exception {
         return "login";
     }
 
-    @PostMapping("/login-process")
+    @PostMapping("/login/login-process")
     public String processLogin(HttpServletRequest request, HttpServletResponse response/*, @RequestBody LoginParam loginParam*/) throws Exception {
         final String username = request.getParameter("username");
         final String password = request.getParameter("password");
@@ -67,7 +67,7 @@ public class LoginController {
         return "redirect:/login/login-successful";
     }
 
-    @GetMapping("/login-successful")
+    @GetMapping("/login/login-successful")
     public ModelAndView success(HttpServletRequest request) throws Exception {
         // 登录成功后用户的认证信息 UserDetails会存在 安全上下文寄存器 SecurityContextHolder 中
 //        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -78,7 +78,7 @@ public class LoginController {
         return new ModelAndView("successful");
     }
 
-    @GetMapping("/login-failure")
+    @GetMapping("/login/login-failure")
     public ModelAndView failure(HttpServletRequest request) throws Exception {
         return new ModelAndView("failure");
     }

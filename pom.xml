@@ -50,6 +50,8 @@
         <mysql.connector.version>8.0.29</mysql.connector.version>
         <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
         <apache.commons-collections.version>4.4</apache.commons-collections.version>
+        <auth0.jwt.version>4.3.0</auth0.jwt.version>
+        <auth0.jwt.rsa.version>0.22.0</auth0.jwt.rsa.version>
     </properties>
 
     <dependencyManagement>
@@ -162,6 +164,18 @@
                 <version>${apache.commons-collections.version}</version>
             </dependency>
             <!-- apache 相关 -->
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${auth0.jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>jwks-rsa</artifactId>
+                <version>${auth0.jwt.rsa.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
