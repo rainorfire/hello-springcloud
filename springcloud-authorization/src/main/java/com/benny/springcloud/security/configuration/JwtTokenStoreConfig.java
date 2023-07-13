@@ -47,9 +47,6 @@ public class JwtTokenStoreConfig {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-//        final KeyPair keyPair = keyPair();
-//        jwtAccessTokenConverter.setKeyPair(keyPair);
-
 
         RSAUtil rsaUtil = new RSAUtil();
         final PrivateKey privateKey = rsaUtil.loadPemPrivateKey("/rsa/private-key.pem");
@@ -75,14 +72,6 @@ public class JwtTokenStoreConfig {
         jwtTokenEnhancer.setClientDetailsService(clientDetailsService);
         return jwtTokenEnhancer;
     }
-
-//    @Bean
-//    public KeyPair keyPair() {
-//        // 从classpath下的证书中获取秘钥对
-//        // keytool -genkey -alias jwt -keyalg RSA -keystore jwt.jks
-//        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
-//        return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
-//    }
 
     @Bean
     public TokenStore tokenStore() {
