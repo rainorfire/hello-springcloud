@@ -204,13 +204,13 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
             .tokenServices(authorizationServerTokenServices())
 //            //配置加载用户信息的服务
             .userDetailsService(userDetailsService)
-            .accessTokenConverter(jwtAccessTokenConverter)
+//            .accessTokenConverter(jwtAccessTokenConverter)
             .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 
-        // 自定义token生成方式
-        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
-        endpoints.tokenEnhancer(tokenEnhancerChain);
+//        // 自定义token生成方式
+//        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+//        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
+//        endpoints.tokenEnhancer(tokenEnhancerChain);
 
 //        endpoints.pathMapping("oauth/confirm_access", "/oauth/custom-confirm-access");
     }
@@ -264,7 +264,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Bean
     public AuthorizationServerTokenServices authorizationServerTokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenEnhancer(jwtTokenEnhancer);
+//        defaultTokenServices.setTokenEnhancer(jwtTokenEnhancer);
         // refresh token的过期时间
         defaultTokenServices.setRefreshTokenValiditySeconds(3600 * 24);
         // access token的过期时间
@@ -277,6 +277,11 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
         defaultTokenServices.setAuthenticationManager(authenticationManager);
         // 客户端配置策略
         defaultTokenServices.setClientDetailsService(clientDetailsService);
+
+        // 自定义token生成方式
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));
+        defaultTokenServices.setTokenEnhancer(tokenEnhancerChain);
         return defaultTokenServices;
     }
 

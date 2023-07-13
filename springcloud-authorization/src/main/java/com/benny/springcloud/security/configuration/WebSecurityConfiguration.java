@@ -1,6 +1,6 @@
 package com.benny.springcloud.security.configuration;
 
-import com.benny.springcloud.security.authentication.CustomSecurityAuthentication;
+import com.benny.springcloud.security.authentication.CustomSecurityAuthenticationProvider;
 import com.benny.springcloud.security.authhandler.LoginSuccessfulHandler;
 import com.benny.springcloud.security.filter.LoginAuthFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +13,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import javax.annotation.Resource;
 
@@ -57,11 +57,22 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      * @return 
      */
     @Bean
-    public CustomSecurityAuthentication customSecurityAuthentication() {
-        CustomSecurityAuthentication customSecurityAuthentication = new CustomSecurityAuthentication();
+    public CustomSecurityAuthenticationProvider customSecurityAuthentication() {
+        CustomSecurityAuthenticationProvider customSecurityAuthentication = new CustomSecurityAuthenticationProvider();
         customSecurityAuthentication.setPasswordEncoder(passwordEncoder());
         customSecurityAuthentication.setUserDetailsService(userDetailsService());
         return customSecurityAuthentication;
+    }
+
+    /**
+     * 刷新token时自动调用，不能用CustomSecurityAuthenticationProvider替代
+     * @return
+     */
+    @Bean
+    public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider(){
+        PreAuthenticatedAuthenticationProvider paap = new PreAuthenticatedAuthenticationProvider();
+        paap.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService()));
+        return paap;
     }
 
     @Bean
@@ -81,6 +92,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.authenticationProvider()
         auth.authenticationProvider(customSecurityAuthentication());
+        // 刷新token需要
+        auth.authenticationProvider(preAuthenticatedAuthenticationProvider());
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 

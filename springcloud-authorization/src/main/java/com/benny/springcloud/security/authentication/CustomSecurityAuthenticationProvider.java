@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @date 2023/6/30 15:54
  * @since 1.0
  */
-public class CustomSecurityAuthentication extends DaoAuthenticationProvider {
+public class CustomSecurityAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,
