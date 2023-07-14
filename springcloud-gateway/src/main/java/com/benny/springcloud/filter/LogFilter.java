@@ -1,10 +1,10 @@
 package com.benny.springcloud.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.cloud.gateway.route.Route;
+import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -32,7 +32,10 @@ public class LogFilter implements GlobalFilter {
         final String path = request.getURI().getPath();
         long startTime = (Long) exchange.getAttributes().get("consumingStartTime");
 
-        log.info("【请求：{}】耗时 {} ms", path, System.currentTimeMillis() - startTime);
+        Route route =(Route) exchange.getAttributes().get(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
+        String currentRouterId = route.getId();
+
+        log.info("【当前路由应用 {} 请求：{}】耗时 {} ms", currentRouterId, path, System.currentTimeMillis() - startTime);
         return chain.filter(exchange);
     }
 }
