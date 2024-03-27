@@ -6,7 +6,7 @@
     <!-- yl's dir C:\Users\yl\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar-->
     <!-- zw's dir D:/webtools/maven3_local/maven-dependcies/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar-->
     <classPathEntry
-            location="D:/mysql-connector-java-5.1.13.jar"/>
+            location="/Users/chenyujia/maven/maven-repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"/>
 
     <!--targetRuntime:
         MyBatis3
